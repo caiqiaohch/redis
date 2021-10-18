@@ -1,0 +1,34 @@
+[Unit]
+Description=Redis In-Memory Data Store
+After=network-online.target
+Wants=network-online.target
+ 
+
+[Service]
+# User=redis
+# Group=redis
+Type=notify
+# RuntimeDirectory=redis
+RuntimeDirectoryMode=0777
+LimitNOFILE=10032
+NoNewPrivileges=yes
+PermissionsStartOnly=true
+TimeoutStartSec=infinity
+TimeoutStopSec=infinity
+UMask=0077
+WorkingDirectory=/usr/local/redis
+PIDFile=/var/run/redis/redis_6379.pid
+# Environment=statedir=/run/redis
+# ExecStartPre=/bin/mkdir -p /run/redis
+# ExecStartPre=/bin/chown -R redis:redis ${statedir}
+# ExecStartPre=/bin/chmod 777 ${statedir}
+# ExecStartPost=/bin/sh -c "echo 6379 > /var/run/redis/redis_6379.pid"
+
+ExecStart=/etc/init.d/redis_6379 start
+ExecStop=/etc/init.d/redis_6379 stop
+ExecReload=/etc/init.d/redis_6379 reload
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target

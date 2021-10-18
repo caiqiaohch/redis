@@ -43,6 +43,7 @@ libssl-dev on Debian/Ubuntu) and run:
 To build with systemd support, you'll need systemd development libraries (such 
 as libsystemd-dev on Debian/Ubuntu or systemd-devel on CentOS) and run:
 
+    % sudo apt install libsystemd-dev  #Ubuntu 系统 安装 libsystemd-dev包 否则编译不过
     % make USE_SYSTEMD=yes
 
 To append a suffix to Redis program names, use:
