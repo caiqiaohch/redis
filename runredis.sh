@@ -33,7 +33,7 @@ REDISPORT=6379
 PATH=/usr/local/redis/bin/:/usr/local/redis/:/usr/sbin/:/usr/local/bin:/sbin:/usr/bin:/bin   
 
 PIDFILE=/var/run/redis/redis_$REDISPORT.pid   
-SERVICECONF=/etc/systemd/system/redis_$REDISPORT.service
+#SERVICECONF=/etc/systemd/system/redis_$REDISPORT.service
 SETUPDIR=/usr/local/redis
 EXEC=$SETUPDIR/bin/redis-server  
 REDIS_CLI=$SETUPDIR/bin/redis-cli
@@ -68,16 +68,13 @@ case "$1" in
                 cp redis.conf  $CONF
                 sed -i "s/6379/$REDISPORT/g" $CONF
                 sed -i "s:SETUPDIR:${SETUPDIR}:g" $CONF
-                cp redis.service  $SERVICECONF
-                sed -i "s/6379/$REDISPORT/g" $SERVICECONF 
-                echo " cp ok"
+                #cp redis.service  $SERVICECONF
+                #sed -i "s/6379/$REDISPORT/g" $SERVICECONF 
+                #echo " cp ok"
                 systemctl daemon-reload
-                update-rc.d redis_${REDISPORT} defaults
+                update-rc.d redis_${REDISPORT} defaults && echo "setup redis_${REDISPORT}  Success!"
                 /lib/systemd/systemd-sysv-install enable redis_${REDISPORT} 
-                echo " reload ok" 
-                systemctl stop redis_${REDISPORT}
-                echo " stop ok" 
-                systemctl start redis_${REDISPORT}
+             
                 
                 echo " start ok"
                 # if command -v chkconfig >/dev/null 2>&1; then
@@ -91,8 +88,8 @@ case "$1" in
                 #         echo "No supported init tool found."
                 #         echo "update-rc.d redis_${REDISPORT} defaults"
                 # fi 
-                # /etc/init.d/redis_$REDISPORT start
-                # echo " setup /etc/init.d/redis_$REDISPORT ok "  
+                 /etc/init.d/redis_$REDISPORT start
+                 echo " setup /etc/init.d/redis_$REDISPORT ok "  
                 ;;
         install)  #只执行一次就可以了
                 mkdir $SETUPDIR
