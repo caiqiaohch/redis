@@ -34,7 +34,7 @@ PATH=/usr/local/redis/bin/:/usr/local/redis/:/usr/sbin/:/usr/local/bin:/sbin:/us
 
 PIDFILE=/var/run/redis/redis_$REDISPORT.pid   
 #SERVICECONF=/etc/systemd/system/redis_$REDISPORT.service
-SETUPDIR=/usr/local/redis
+SETUPDIR=/usr/local 
 EXEC=$SETUPDIR/bin/redis-server  
 REDIS_CLI=$SETUPDIR/bin/redis-cli
 CONF=$SETUPDIR/redis_$REDISPORT.conf
@@ -93,6 +93,8 @@ case "$1" in
                 ;;
         install)  #只执行一次就可以了
                 mkdir $SETUPDIR
+                mkdir $SETUPDIR/db
+                mkdir $SETUPDIR/log
                 echo "mkdir $SETUPDIR " 
                 make PREFIX=$SETUPDIR install
                 #sudo adduser --system --group --no-create-home redis
